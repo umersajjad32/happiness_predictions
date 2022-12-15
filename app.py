@@ -15,7 +15,7 @@ def predict(model, input_df):
 def run():
     from PIL import Image
     image = Image.open('logo.png')
-    image_hospital = Image.open('hospital.jpg')
+    image_profile = Image.open('profile.jpg')
 
     st.image(image, use_column_width=False)
 
@@ -33,14 +33,15 @@ def run():
     if add_selectbox == 'Online':
 
         GDP_per_Capita = st.number_input('Log of GDP_per_Capita', min_value=0.00, max_value=2.30, value=0.97)
-        Social_Support = st.number_input('Log of Social_Support', min_value=0.00, max_value=1.74, value=1.03)
-        Healthy_Life_Expectancy = st.number_input('Log of Healthy_Life_Expectancy', min_value=0.00, max_value=1.24,
+        Social_Support = st.number_input('Annual Avg of Social_Support', min_value=0.00, max_value=1.74, value=1.03)
+        Healthy_Life_Expectancy = st.number_input('Healthy Life Expectancy', min_value=0.00, max_value=1.24,
                                                   value=0.60)
-        Freedom = st.number_input('Log of Freedom', min_value=0.00, max_value=0.84, value=0.44)
-        Government_Corruption_Perception = st.number_input('Log of Government_Corruption_Perception', min_value=0.00,
+        Freedom = st.number_input('Annual Avg of Freedom', min_value=0.00, max_value=0.84, value=0.44)
+        Government_Corruption_Perception = st.number_input('Annual Avg of Government Corruption Perception', min_value=0.00,
                                                            max_value=0.68, value=0.13)
-        Generosity = st.number_input('Log of Generosity', min_value=0.00, max_value=0.93, value=0.20)
-        #         children = st.selectbox('Children', [0,1,2,3,4,5,6,7,8,9,10])
+        Generosity = st.number_input('Annual Avg of Generosity', min_value=0.00, max_value=0.93, value=0.20)
+        Regional_Indicator = st.selectbox('Region of Your Country', [west_europe,north_america,middle_east,latin_america,central_europe,east_asia,south_east_asia,commonwealth_independent,sub_saharan_africa,south_asia])
+
         #         if st.checkbox('Smoker'):
         #             smoker = 'yes'
         #         else:
@@ -51,13 +52,13 @@ def run():
 
         input_dict = {'GDP_per_Capita': GDP_per_Capita, 'Social_Support': Social_Support,
                       'Healthy_Life_Expectancy': Healthy_Life_Expectancy, 'Freedom': Freedom,
-                      'Government_Corruption_Perception': Government_Corruption_Perception, 'Generosity': Generosity}
+                      'Government_Corruption_Perception': Government_Corruption_Perception, 'Generosity': Generosity, 'Regional_Indicator': Regional_Indicator}
 
         input_df = pd.DataFrame([input_dict])
 
         if st.button("Predict"):
             output = predict(model=model, input_df=input_df)
-            output = 'The Happiness Score is: ' + str(output)
+            output = 'The Happiness Score: ' + str(output)
 
             st.success('The output is {}'.format(output))
 
